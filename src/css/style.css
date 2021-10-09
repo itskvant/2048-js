@@ -1,0 +1,32 @@
+* {
+    font-size: 25px;
+    font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
+}
+
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+    height: max-content;
+    width: 425px;
+    padding: 10px;
+    background-color: rgb(245, 236, 220);
+    border: solid darksalmon;
+}
+
+.grid div {
+    width: 100px;
+    height: 100px;
+    background-color: rgb(230, 162, 140);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: solid darksalmon;
+    color: black;
+    font-weight: bold;
+}
+
+.grid div div {
+    width: 85px;
+    height: 85px;
+    background-color: rgb(230, 189, 175);
+}
