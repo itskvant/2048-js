@@ -93,8 +93,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (keyCode == "Space") {
             let randIdxs = randomTiles(2, width, matrix);
             // add the tiles to the tile containers with those idxs
-            addTile(matrix, randIdxs, 2);
-            drawMatrix(matrix, grid);
+            if (emptySpaces(matrix)) {
+                addTile(matrix, randIdxs, 2);
+                drawMatrix(matrix, grid);
+            }
         }
     })
 });
