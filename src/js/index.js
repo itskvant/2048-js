@@ -1,45 +1,4 @@
-class Tile {
-    /**
-     * 
-     * @param {HTMLDivElement} el 
-     * @param {Number} value 
-     */
-    constructor(el, value) {
-        this.el = el;
-        el.innerHTML = value;
-        this.value = value;
-    }
-}
-
-const drawBoard = (matrix, grid) => {
-    for (let row = 0; row < matrix.length; row++) {
-        for (let tileIdx = 0; tileIdx < matrix.length; tileIdx++) {
-            grid.appendChild(matrix[row][tileIdx].el);
-        }
-    }
-}
-
-const genMatrix = (width) => {
-    let matrix = [];
-    for (let row = 0; row < width; row++) {
-        let row = [];
-        for (let tileIdx = 0; tileIdx < width; tileIdx++) {
-            const divEl = document.createElement('div');
-            const newTile = new Tile(divEl, 0);
-            row.push(newTile)
-        }
-        matrix.push(row);
-    }
-    return (matrix);
-}
-
-const addTiles = (idxArr, valArr, matrix) => {
-    for (let i = 0; i < idxArr.length; i++) {
-        matrix[idxArr[i][0]][idxArr[i][1]] = new Tile(matrix[idxArr[i][0]][idxArr[i][1]].el, valArr[i]);
-    }
-}
-
-const randomTiles = (num, width) => {
+const randomTiles = (num, width, matrix) => {
     let arr = [];
     for (let i = 0; i < num; i++) {
         let rowIndex = Math.floor(Math.random() * width);
@@ -49,32 +8,120 @@ const randomTiles = (num, width) => {
     let same = false;
     for (let i = 0; i < arr.length - 1; i++) {
         if (!same) {
-            same = arr[i].length == arr[i + 1].length && arr[i].every((v, j)=> v === arr[i + 1][j]);
+            same = arr[i].every((v, j) => v === arr[i + 1][j]);
+        }
+    }
+    let occupied = false;
+    for (let i = 0; i < arr.length; i++) {
+        if (!occupied) {
+            console.log(arr[i])
+            const tileContainer = matrix[arr[i][0]][arr[i][1]];
+            if (tileContainer._tile) {
+                occupied = true;
+            }
         }
     }
 
-    if (!same) {
+    if (!same && !occupied) {
         return arr;
     } else {
-        return randomTiles(num, width);
+        return randomTiles(num, width, matrix);
+    }
+}
+
+const emptySpaces = matrix => {
+    let hasEmptySpaces = false;
+    for (let i = 0; i < matrix.length; i++) {
+        if (!hasEmptySpaces) {
+            hasEmptySpaces = matrix[i].every((val, j) => matrix[i][j].tileContainer._tile === undefined);
+        }
+    }
+    return hasEmptySpaces;
+}
+
+const genMatrix = width => {
+    let matrix = [];
+    for (let i = 0; i < width; i++) {
+        let row = [];
+        for (let j = 0; j < width; j++) {
+            const div = document.createElement('div');
+            div.classList.add('tile-container');
+            const tileContainer = new TileContainer(div);
+            row.push(tileContainer)
+        }
+        matrix.push(row);
+    }
+    return matrix;
+}
+
+const addTile = (matrix, arr, value) => {
+    for (let i = 0; i < arr.length; i++) {
+        const tileContainer = matrix[arr[i][0]][arr[i][1]];
+        const tileDiv = document.createElement('div');
+        tileDiv.classList.add('tile')
+        tileContainer.tile = new Tile(tileDiv, value);
+    }
+}
+
+const drawMatrix = (matrix, grid) => {
+    for (let i = 0; i < matrix.length; i++) {
+        for (let j = 0; j < matrix.length; j++) {
+            const divToAppend = matrix[i][j].el;
+            if (matrix[i][j]?._tile) {
+                const tileEl = matrix[i][j]._tile.el;
+                tileEl.textContent = matrix[i][j]._tile.value
+                divToAppend.appendChild(tileEl)
+            }
+            grid.appendChild(divToAppend);
+        }
     }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
     const grid  = document.querySelector('.grid');
-    const width = 4;
+    const width = 4
+
+    // gen matrix
     let matrix = genMatrix(width);
-    console.log(matrix);
-    let rTiles = randomTiles(2, width)
-    addTiles(rTiles, [2, 2], matrix);
-    drawBoard(matrix, grid);
+    // get random idxs
+    let randIdxs = randomTiles(2, width, matrix);
+    // add the tiles to the tile containers with those idxs
+    addTile(matrix, randIdxs, 2);
+    drawMatrix(matrix, grid);
     window.addEventListener('keydown', (event) => {
-        const keyCode = event.code
-        console.log(keyCode)
+        const keyCode = event.code;
         if (keyCode == "Space") {
-            let rTiles = randomTiles(2, width);
-            addTiles(rTiles, [2, 2], matrix);
-            drawBoard(matrix, grid);
+            let randIdxs = randomTiles(2, width, matrix);
+            // add the tiles to the tile containers with those idxs
+            addTile(matrix, randIdxs, 2);
+            drawMatrix(matrix, grid);
         }
     })
 });
+
+class TileContainer {
+    /**
+     * 
+     * @param {HTMLDivElement} el 
+     * @param {Tile} tile 
+     */
+    constructor (el, tile) {
+        this.el = el;
+    }
+    set tile(tile) {
+        this._tile = tile;
+        this.el.appendChild(tile.el);
+    }
+} 
+
+class Tile {
+    /**
+     * 
+     * @param {HTMLDivElement} el 
+     * @param {Number} value 
+     */
+    constructor (el, value) {
+        this.el = el;
+        this.value = value;
+    }
+}

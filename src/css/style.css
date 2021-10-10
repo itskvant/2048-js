@@ -1,32 +1,93 @@
 * {
+    margin: 0;
+}
+
+body {
     font-size: 25px;
     font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
+    background-color: #faf8ef;;
+}
+
+.container {
+    width: min-content;
+    margin: 0 auto;
+}
+
+
+.heading {
+    width: auto;
+    border-radius: 3px;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    margin: 15px;
+}
+
+.title {
+    color: #776e65
+}
+
+.info {
+    display: flex;
+    flex-wrap: wrap;
+    height: 100px;
+    justify-content: center;
+}
+
+.options {
+    margin-left: auto;
+    width: 150px;
+}
+
+.options button {
+    width: 150px;
+    margin-bottom: 10px;
+    height: 40px;
+    border: none;
+    background-color: rgb(230, 162, 140);
+    color: white;
+    
 }
 
 .grid {
     display: flex;
     flex-wrap: wrap;
     height: max-content;
-    width: 425px;
+    width: 450px;
     padding: 10px;
-    background-color: rgb(245, 236, 220);
-    border: solid darksalmon;
+    background-color: #bbada0;
+    border-radius: 2%;
 }
 
-.grid div {
+.tile-container {
     width: 100px;
     height: 100px;
-    background-color: rgb(230, 162, 140);
+    background-color: rgba(238, 228, 218, 0.35);
     display: flex;
     justify-content: center;
     align-items: center;
-    border: solid darksalmon;
+    border: solid #bbada0 6px;
     color: black;
     font-weight: bold;
+    border-radius: 8%;
 }
 
-.grid div div {
-    width: 85px;
-    height: 85px;
-    background-color: rgb(230, 189, 175);
+.tile {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #eee4da;
+    border-radius: 8%;
 }
+
+.youlose {
+    width: auto;
+    border-radius: 3px;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    margin: 15px;
+}
+
