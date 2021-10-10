@@ -13,7 +13,7 @@
     + I also rewrote a bunch of functions for this to work with TileContainer
     + Fixed bugs with randomTiles function - now it can't add tiles to where they already are
     + Added a function to check if there are any spaces left
-    + Modified HTML
++ Modified HTML
 
 ## 09 Sep 2021 (Alpha 0.1.0)
 + Added a bunch of ugly code
