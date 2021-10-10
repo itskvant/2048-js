@@ -6,6 +6,15 @@
 + Add score
 + Make css more flexible so the values aren't hard-coded in pixels
 + I also realized I can just copy CSS styling from the [original 2048](https://play2048.co/), and I'll do it a bit later
+
+## 10 Sep 2021 (Alpha 0.1.1)
++ index.js rewritten
+    + Added TileContainer class to make CSS and HTML prettier
+    + I also rewrote a bunch of functions for this to work with TileContainer
+    + Fixed bugs with randomTiles function - now it can't add tiles to where they already are
+    + Added a function to check if there are any spaces left
+    + Modified HTML
+
 ## 09 Sep 2021 (Alpha 0.1.0)
 + Added a bunch of ugly code
 + Added grid & tiles
